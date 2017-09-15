@@ -697,7 +697,7 @@ release-only:
 		exit 1 ; \
 	fi
 
-$(PKG): release-only
+$(PKG):
 	$(RM) -r $(MACOSOUTDIR)
 	mkdir -p $(MACOSOUTDIR)/installer/productbuild
 	cat tools/macos-installer/productbuild/distribution.xml.tmpl  \
@@ -739,10 +739,20 @@ $(PKG): release-only
 		--identifier org.nodejs.node.pkg \
 		--root $(MACOSOUTDIR)/dist/node $(MACOSOUTDIR)/pkgs/node-$(FULLVERSION).pkg
 	pkgbuild --version $(NPMVERSION) \
-		--identifier org.nodejs.npm.pkg \
-		--root $(MACOSOUTDIR)/dist/npm \
+		--identifier org.nodejs.npm-installer.pkg \
+		--nopayload \
 		--scripts ./tools/macos-installer/pkgbuild/npm/scripts \
-			$(MACOSOUTDIR)/pkgs/npm-$(NPMVERSION).pkg
+			$(MACOSOUTDIR)/pkgs/npm-installer=$(NPMVERSION).pkg
+	pkgbuild --version $(NPMVERSION) \
+		--identifier org.nodejs.yarn-installer.pkg \
+		--nopayload \
+		--scripts ./tools/macos-installer/pkgbuild/yarn/scripts \
+			$(MACOSOUTDIR)/pkgs/yarn-installer-$(NPMVERSION).pkg
+	pkgbuild --version $(NPMVERSION) \
+		--identifier org.nodejs.dep-installer.pkg \
+		--nopayload \
+		--scripts ./tools/macos-installer/pkgbuild/dep/scripts \
+			$(MACOSOUTDIR)/pkgs/dep-installer-$(NPMVERSION).pkg
 	productbuild --distribution $(MACOSOUTDIR)/installer/productbuild/distribution.xml \
 		--resources $(MACOSOUTDIR)/installer/productbuild/Resources \
 		--package-path $(MACOSOUTDIR)/pkgs ./$(PKG)

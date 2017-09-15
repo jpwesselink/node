@@ -5,19 +5,32 @@
     <conclusion file="conclusion.html"/>
     <background alignment="topleft" file="osx_installer_logo.png"/>
     <pkg-ref id="org.nodejs.node.pkg" auth="root"/>
-    <pkg-ref id="org.nodejs.npm.pkg" auth="root"/>
+    <pkg-ref id="org.nodejs.npm-installer.pkg"/>
+    <pkg-ref id="org.nodejs.yarn-installer.pkg"/>
+    <pkg-ref id="org.nodejs.dep-installer.pkg"/>
+    <domains enable_anywhere="true" enable_currentUserHome="true" enable_localSystem="true"/>
     <options customize="allow" require-scripts="false"/>
     <license file="license.rtf"/>
     <choices-outline>
       <line choice="org.nodejs.node.pkg" />
-      <line choice="org.nodejs.npm.pkg"/>
+      <line choice="org.nodejs.npm-installer.pkg"/>
+      <line choice="org.nodejs.yarn-installer.pkg"/>
+      <line choice="org.nodejs.dep-installer.pkg"/>
     </choices-outline>
     <choice id="org.nodejs.node.pkg" visible="true" title="Node.js {nodeversion}">
         <pkg-ref id="org.nodejs.node.pkg"/>
     </choice>
     <pkg-ref id="org.nodejs.node.pkg" version="{nodeversion}" onConclusion="none">node-{nodeversion}.pkg</pkg-ref>
-    <choice id="org.nodejs.npm.pkg" visible="true" title="npm {npmversion}">
-        <pkg-ref id="org.nodejs.npm.pkg"/>
+    <choice id="org.nodejs.npm-installer.pkg" visible="true" title="npm {npmversion}">
+        <pkg-ref id="org.nodejs.npm-installer.pkg"/>
     </choice>
-    <pkg-ref id="org.nodejs.npm.pkg" version="{npmversion}" onConclusion="none">npm-{npmversion}.pkg</pkg-ref>
+    <pkg-ref id="org.nodejs.npm-installer.pkg" version="{npmversion}" onConclusion="none">npm-installer-{npmversion}.pkg</pkg-ref>
+    <choice id="org.nodejs.yarn-installer.pkg" visible="true" title="yarn">
+        <pkg-ref id="org.nodejs.yarn-installer.pkg"/>
+    </choice>
+    <pkg-ref id="org.nodejs.yarn-installer.pkg" version="{npmversion}" onConclusion="none">yarn-installer-{npmversion}.pkg</pkg-ref>
+    <choice id="org.nodejs.dep-installer.pkg" visible="true" title="dep">
+        <pkg-ref id="org.nodejs.dep-installer.pkg"/>
+    </choice>
+    <pkg-ref id="org.nodejs.dep-installer.pkg" version="{npmversion}" onConclusion="none">dep-installer-{npmversion}.pkg</pkg-ref>
 </installer-gui-script>
